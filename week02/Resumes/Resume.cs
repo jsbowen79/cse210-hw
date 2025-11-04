@@ -9,7 +9,7 @@ public class Resume
         Console.WriteLine("Jobs:"); 
         foreach ( Job job in _jobs)
         {
-            Job.Display(job._jobTitle, job._company,  job._startYear, job._endYear); 
+            job.Display(); 
         }
     }
 }
