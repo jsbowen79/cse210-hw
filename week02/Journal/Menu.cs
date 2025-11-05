@@ -15,6 +15,8 @@ public class Menu
             Console.WriteLine("Press 3 to Write in your journal.");
             Console.WriteLine("Press 4 to Review your journal. ");
             Console.WriteLine("Press 5 to Quit.\n\n ");
+            Console.WriteLine("Press 6 to Encrypt and save.");
+            Console.WriteLine("Press 7 to Load Encrypted file. "); 
 
 
             string input = Console.ReadLine() ?? "";
@@ -40,6 +42,12 @@ public class Menu
                     continue;
                 case "5":
                     return;
+                case "6":
+                    // SecureJsonHandler encryptedFile = new SecureJsonHandler();
+                    Encrypt.SaveProtectedJson(_journal);
+                    continue; 
+                case "7":
+                    _journal = Encrypt.LoadProtectedJson(); 
                 default:
                     Console.WriteLine("Please make a valid selection.");
                     continue;  
