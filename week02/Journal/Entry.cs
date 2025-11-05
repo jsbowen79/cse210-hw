@@ -11,14 +11,25 @@ public class Entry
     {
        
         Prompt todaysPrompt = new Prompt();
+        string livePrompt = todaysPrompt.GetPrompt();
+        Console.WriteLine($"Welcome to your Journal.\nToday's date is {_currentDate.ToShortDateString()}");
+        Console.WriteLine("Your topic for today is: \n");
+        
+        Console.WriteLine(livePrompt + Environment.NewLine);
+        while (true)
+        {
+            Console.Write("Please begin your Journal Entry: ");
+            _todaysEntry = Console.ReadLine();
 
-        Console.WriteLine($"Welcome to your Journal.\nToday's date is {_currentDate}");
-        Console.WriteLine("Your topic for today is: ");
-        Console.WriteLine(todaysPrompt.GetPrompt());
-        Console.Write("Please begin your Journal Entry: ");
-        _todaysEntry = Console.ReadLine();
-
-        _journalEntry = EntryItems.CreateEntryListItem(_currentDate, _todaysEntry);
-        return _journalEntry; 
+            if (_todaysEntry != "")
+            {
+                _journalEntry = EntryItems.CreateEntryListItem(_currentDate, livePrompt, _todaysEntry);
+                return _journalEntry;
+            }
+            else
+            {
+                Console.WriteLine("You must make an entry. ");
+            }
+        }    
     }
 }
