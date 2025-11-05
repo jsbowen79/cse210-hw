@@ -6,9 +6,7 @@ using System.Collections.Generic;
 public class Load
 /*This class contains all of the tools necessary to load a previously saved file. */
 {
-    public string _fileName = "";
-    public string _toDeserialize = "";
-
+    
     public static List<EntryItems> LoadFile()
     /*This function will ask the user for the file name and attempt to load the identified
     file.  The function has error handling in case the file doesn't exist or the file
@@ -17,7 +15,8 @@ public class Load
     Jsonstring turning it back into the original List<EntryItems> that was saved.  The
     function maintains the original data types of DateTime, string, string. */
     {
-        Load file = new Load();
+        string toDeserialize = ""; 
+        string fileName = ""; 
         string cwd = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\.."));
         string fileExtension = ".json"; 
         while (true)
@@ -31,16 +30,16 @@ public class Load
                 continue;
             }
 
-            file._fileName = Path.Combine(cwd, input) + fileExtension;
+            fileName = Path.Combine(cwd, input) + fileExtension;
 
             try
             {
-                file._toDeserialize = File.ReadAllText(file._fileName);
-                List<EntryItems>? journal = JsonSerializer.Deserialize<List<EntryItems>>(file._toDeserialize);
+                toDeserialize = File.ReadAllText(fileName);
+                List<EntryItems>? journal = JsonSerializer.Deserialize<List<EntryItems>>(toDeserialize);
 
                 if (journal != null)
                 {
-                    Console.WriteLine($"File '{file._fileName}' loaded successfully!");
+                    Console.WriteLine($"File '{fileName}' loaded successfully!");
                     return journal;
                 }
                 else

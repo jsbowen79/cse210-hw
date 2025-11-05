@@ -8,7 +8,6 @@ public class Save
 /*This class will contain the tools necessary to save the journal list while retaining 
 the original data types contained within the list. */
 {
-    public string _fileName = "";
 
     public static void SaveFile(List<EntryItems> journal)
     /*This function will take the List<EntryItems> passed to it and convert it into a 
@@ -16,7 +15,7 @@ the original data types contained within the list. */
     data types within the file.  The function will then save that Jsonstring. 
     Arguments: List<EntryItems> */
     {
-        Save file = new Save();
+        string fileName = "";
         string cwd = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, @"..\..\.."));
         string fileExtension = ".json"; 
         bool unsaved = true; 
@@ -32,7 +31,7 @@ the original data types contained within the list. */
                 continue;
             }
 
-            file._fileName = Path.Combine(cwd, input) + fileExtension;
+            fileName = Path.Combine(cwd, input) + fileExtension;
 
             try
             {
@@ -41,8 +40,8 @@ the original data types contained within the list. */
                     new JsonSerializerOptions { WriteIndented = true }
                 );
                
-                File.WriteAllText(file._fileName, jsonString);
-                Console.WriteLine($"File saved successfully to {file._fileName}");
+                File.WriteAllText(fileName, jsonString);
+                Console.WriteLine($"File saved successfully to {fileName}");
                 unsaved = false;
                 continue;         
                 
