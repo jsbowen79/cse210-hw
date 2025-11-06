@@ -4,9 +4,9 @@ public class Menu
 /*This class will contain the tools necessary to provide the user facing menu.  */
 {
     public static void DisplayMenu()
-    /*This function will present the user with a menu that provides the user with 
-    options.  The function will then call the code necessary to carry out the user's 
-    request.  The function will continue running until the user decides to quit.  */
+    /*This method will present the user with a menu that provides the user with 
+    options.  The method will then call the code necessary to carry out the user's 
+    request.  The method will continue running until the user decides to quit.  */
     {
         List<EntryItems> journal = new List<EntryItems>();
 

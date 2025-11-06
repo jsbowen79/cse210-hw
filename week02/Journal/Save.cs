@@ -10,9 +10,9 @@ the original data types contained within the list. */
 {
 
     public static void SaveFile(List<EntryItems> journal)
-    /*This function will take the List<EntryItems> passed to it and convert it into a 
-    Jsonstring using JsonSerializer.  This wil allow the function to maintain the original 
-    data types within the file.  The function will then save that Jsonstring. 
+    /*This method will take the List<EntryItems> passed to it and convert it into a 
+    Jsonstring using JsonSerializer.  This wil allow the method to maintain the original 
+    data types within the file.  The method will then save that Jsonstring. 
     Arguments: List<EntryItems> */
     {
         string fileName = "";

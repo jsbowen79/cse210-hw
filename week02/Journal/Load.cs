@@ -8,12 +8,12 @@ public class Load
 {
     
     public static List<EntryItems> LoadFile()
-    /*This function will ask the user for the file name and attempt to load the identified
-    file.  The function has error handling in case the file doesn't exist or the file
+    /*This method will ask the user for the file name and attempt to load the identified
+    file.  The method has error handling in case the file doesn't exist or the file
     load experiences a problem.  In that case, the user will be able to try again. The 
-    function then opens the file and saves the Jsonstring inside.  It then DeSerializes the 
+    method then opens the file and saves the Jsonstring inside.  It then DeSerializes the 
     Jsonstring turning it back into the original List<EntryItems> that was saved.  The
-    function maintains the original data types of DateTime, string, string. */
+    method maintains the original data types of DateTime, string, string. */
     {
         string toDeserialize = ""; 
         string fileName = ""; 

@@ -7,7 +7,7 @@ Journal*/
 {
 
     public EntryItems journalEntries()
-    /*This function extracts a prompt from the Prompt class and presents the user with the 
+    /*This method extracts a prompt from the Prompt class and presents the user with the 
     prompt.  It then takes the user's entry and puts it together with the date and the 
     prompt that was offered in a standardized format to be saved in the Journal.
     Returns: _journalEntry(DateTime, string, string) */

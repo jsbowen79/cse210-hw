@@ -18,9 +18,9 @@ was signed on when the file was encrypted.*/
     private static readonly string filePath = Path.Combine(oneDrivePath, "securedata.json");
 
     public static void SaveProtectedJson(List<EntryItems> list)
-    /*This function will use the JsonSerializer to save the list of journal
+    /*This method will use the JsonSerializer to save the list of journal
     entries that is passed to it to a Json string.  The JsonSerializer will retain the data 
-    types of DateTime and string contained in the list.  The function will 
+    types of DateTime and string contained in the list.  The method will 
     then encrypt the Jsonstring and save it in a secure file.*/
     {
         string jsonString = JsonSerializer.Serialize(list);
@@ -31,7 +31,7 @@ was signed on when the file was encrypted.*/
     }
 
     public static List<EntryItems> LoadProtectedJson()
-    /*This function will load a previously saved encrypted file and decrypt
+    /*This method will load a previously saved encrypted file and decrypt
     back to a json string containing the list of journal entries that was 
     originally saved and encrypted.  Data types will be retained as DateTime
     and String objects by the JsonSerializer.

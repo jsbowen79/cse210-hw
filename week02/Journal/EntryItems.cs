@@ -26,7 +26,7 @@ contained within journal entries.  */
     }
 
     public static EntryItems CreateEntryListItem(DateTime eventDate, string prompt, string input)
-    /* This function will be called by the Entry class to create the actual list item to 
+    /* This method will be called by the Entry class to create the actual list item to 
     be saved in the journal list.  The list item will contain the date of the entry in DateTime 
     format, the prompt that was presented to the user for the entry, and the user's response
     or journal entry. 
