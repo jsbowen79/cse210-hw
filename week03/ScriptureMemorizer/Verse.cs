@@ -12,7 +12,7 @@ public class Verse
     in a Dictionary with the verse number as a key.  The words in the verse are separated into a list of 
     strings so that each word can be managed individually.  This method  ensures that the verse number and
     the associated text are always kept together and that individual words can be changed and kept in their 
-    propper place. */
+    proper place. */
     {
       
 

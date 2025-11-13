@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using System.Threading.Tasks; 
 
 class Program
 /*This program asks the user for a scripture reference and the text of the scripture.  The 
@@ -9,14 +9,22 @@ The program removes two words at a time from each verse to help the user memoriz
 given selection.  The program only removes words that have not already been removed.  The program 
 ends when the user types quit or when the last word in each verse has been hidden.*/
 {
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
+        Dictionary<int, List<string>> scriptureToMemorize;
         Console.WriteLine("Hello World! This is the ScriptureMemorizer Project.");
 
 
         ScriptureReference scripture = ScriptureReference.EnterScriptureReference();
+        string autoLoad = scripture.ToString();
+        Console.WriteLine($"Autoload: {autoLoad}"); 
+        scriptureToMemorize = await ScriptureFetcher.GetScriptureTextAsync(autoLoad.Trim());
+        if (scriptureToMemorize.Count() == 0)
+        {
+            Console.WriteLine("Scripture AutoLoad failed. Switch to Manual Loading");
+            scriptureToMemorize = Verse.CreateScripture(scripture);
+        }
 
-        Dictionary<int, List<string>> scriptureToMemorize = Verse.CreateScripture(scripture);
 
         if (!Console.IsOutputRedirected)
         {

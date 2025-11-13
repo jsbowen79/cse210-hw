@@ -7,27 +7,56 @@ public class ScriptureFetcher
 {
     private static readonly HttpClient client = new HttpClient();
 
+    public class VerseDetail
+    {
+        public int verse { get; set; }
+        public string text { get; set; }
+        
+    }
+
     public class BibleApiResponse
     {
         public string reference { get; set; }
         public string text { get; set; }
         public string translation_name { get; set; }
+        public VerseDetail[] verses { get; set; }
+        
 
     }
-    public static async Task<string> GetScriptureTextAsync(string reference)
+    
+
+    public static async Task<Dictionary<int, List<string>>> GetScriptureTextAsync(string _reference)
     {
         try
 
         {
-            string url = $"https://bible-api.com/{Uri.EscapeDataString(reference)}";
+            Console.WriteLine($"URL: https://bible-api.com/{Uri.EscapeDataString(_reference)}?translation=kjv");
+            string url = $"https://bible-api.com/{Uri.EscapeDataString(_reference)}";
             string response = await client.GetStringAsync(url);
-            var scripture = JsonSerializer.Deserialize<BibleApiResponse>(response); 
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
 
-            return scripture?.text ?? "No text found for that reference.";
+            var dictionary = new Dictionary<int, List<string>>();
+
+            var scripture = JsonSerializer.Deserialize<BibleApiResponse>(response, options);
+            if (scripture?.verses != null)
+            {
+                foreach (var v in scripture.verses)
+                {
+                    List<string> words = new List<string>(v.text.Split("", StringSplitOptions.RemoveEmptyEntries));
+                    Console.WriteLine(words);
+                    Console.WriteLine(v.verse); 
+                    dictionary[v.verse] = words; 
+                }
+            } 
+
+            return dictionary;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            return $"Error fetching scripture: {ex.Message}"; 
+            return new Dictionary<int, List<string>>();
         }
     }
 }
