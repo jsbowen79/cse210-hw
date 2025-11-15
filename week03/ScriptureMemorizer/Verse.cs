@@ -3,9 +3,6 @@
 public class Verse
 {
 
-    private static List<string> _verseText = new List<string>();
-
-    private static Dictionary<int, List<string>> _scriptureVerses = new Dictionary<int, List<string>>();
 
     public static Dictionary<int, List<string>> CreateScripture(ScriptureReference currentReference)
     /*This method prompts the user for the text of the scripture one verse at a time.  It saves the entry
@@ -14,6 +11,9 @@ public class Verse
     the associated text are always kept together and that individual words can be changed and kept in their 
     proper place. */
     {
+    List<string> _verseText = new List<string>();
+
+    Dictionary<int, List<string>> _scriptureVerses = new Dictionary<int, List<string>>();
       
 
         int begin = currentReference.GetBeginningVerse();

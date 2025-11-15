@@ -7,7 +7,11 @@ class Program
 program allows for scriptures with unlimited numbers of consecutive verses in the same chapter.
 The program removes two words at a time from each verse to help the user memorize the verses in the 
 given selection.  The program only removes words that have not already been removed.  The program 
-ends when the user types quit or when the last word in each verse has been hidden.*/
+ends when the user types quit or when the last word in each verse has been hidden.  The program 
+first asks for a scripture reference.  It attempts to retrieve the requested reference from 
+the openScripture API.  If unsuccessful, the program allows the user to enter in the text of the 
+scripture.  The openScripture API serves Old and New Testaments, Book of Mormon, Pearl of Great
+Price, and Doctrine and Covenants. */
 {
     static async Task Main(string[] args)
     {

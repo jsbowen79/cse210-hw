@@ -6,6 +6,8 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 public class ScriptureFetcher
+/* This class is responsible for fetching a scripture from the openscripture API and saving it into a Dictionary in the 
+form required for the rest of the program to use it.  */
 {
     private static readonly HttpClient _client = new HttpClient();
 
@@ -15,7 +17,7 @@ public class ScriptureFetcher
         int chapter = reference.GetChapter();
         int beginningVerse = reference.GetBeginningVerse();
         int? endingVerse = reference.GetEndingVerse();
-        List<string> verses = new List<string>();  
+        List<string> verses = new List<string>();
         Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
 
         try
@@ -46,23 +48,23 @@ public class ScriptureFetcher
                     return dict;
                 }
 
-                int lastVerse = endingVerse ?? beginningVerse; 
-                
+                int lastVerse = endingVerse ?? beginningVerse;
+
                 for (int verseNumber = beginningVerse; verseNumber <= lastVerse; verseNumber++)
                 {
                     string text = root.Chapter.Verses[verseNumber - 1].Text;
 
-                    verses = text.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList(); 
-                    dict[verseNumber]=verses; 
+                    verses = text.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList();
+                    dict[verseNumber] = verses;
                 }
 
                 return dict;
             }
-            return dict;  
+            return dict;
         }
         catch
         {
-            return dict; 
+            return dict;
         }
     }
 

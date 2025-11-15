@@ -1,7 +1,9 @@
 public class AutoVerse
+/*This class creates an Autoverse object with public getters and setters to be utilized by the ScriptureFetcher class.
+*/
 {
     private string _text;
-    private List<AutoVerse> _verses; 
+    private List<AutoVerse> _verses;
 
     public string Text
     {
@@ -12,6 +14,6 @@ public class AutoVerse
     public List<AutoVerse> Verses
     {
         get => _verses;
-        set => _verses = value;  
+        set => _verses = value;
     }
 }
