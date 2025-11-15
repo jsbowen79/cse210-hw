@@ -18,7 +18,7 @@ ends when the user types quit or when the last word in each verse has been hidde
         ScriptureReference scripture = ScriptureReference.EnterScriptureReference();
         string autoLoad = scripture.ToString();
         Console.WriteLine($"Autoload: {autoLoad}"); 
-        scriptureToMemorize = await ScriptureFetcher.GetScriptureTextAsync(autoLoad.Trim());
+        scriptureToMemorize = await ScriptureFetcher.GetScriptureTextAsync(scripture);
         if (scriptureToMemorize.Count() == 0)
         {
             Console.WriteLine("Scripture AutoLoad failed. Switch to Manual Loading");
@@ -44,9 +44,8 @@ ends when the user types quit or when the last word in each verse has been hidde
         bool again = true;
         while (true)
         {
-            foreach (KeyValuePair<int, List<string>> entry in scriptureToMemorize)
-            {
-                if (entry.Value.Any(w => w != new string('_', w.Length)))
+            bool completed = scriptureToMemorize.SelectMany(kv => kv.Value).Any(w => w != new string('_', w.Length));
+                if (completed) 
                 {
                     again = true;
                 }
@@ -55,7 +54,7 @@ ends when the user types quit or when the last word in each verse has been hidde
                     Console.WriteLine("Thank you for using Scripture Memorizer");
                     again = false;
                 }
-            }
+            
             if (again)
             {
                 Console.WriteLine("Type 'Quit' to stop or press Enter to continue.");
@@ -72,9 +71,10 @@ ends when the user types quit or when the last word in each verse has been hidde
                         Console.Clear();
                     }
                     Dictionary<int, List<string>> editedDict = RemoveWords.ReplaceWords(scriptureToMemorize);
+                    
+                    Console.WriteLine($"{scripture}:");
                     foreach (KeyValuePair<int, List<string>> entry in scriptureToMemorize)
                     {
-                        Console.WriteLine($"{scripture}:");
                         Console.Write($"{entry.Key}: ");
                         Console.WriteLine(string.Join(" ", entry.Value));
                     }

@@ -1,62 +1,85 @@
 using System;
+using System.ComponentModel;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 public class ScriptureFetcher
 {
     private static readonly HttpClient client = new HttpClient();
 
-    public class VerseDetail
+    public class OpenScriptureRoot
     {
-        public int verse { get; set; }
-        public string text { get; set; }
-        
+        public Chapter Chapter { get; set; }
     }
 
-    public class BibleApiResponse
+    public class Chapter
     {
-        public string reference { get; set; }
-        public string text { get; set; }
-        public string translation_name { get; set; }
-        public VerseDetail[] verses { get; set; }
-        
-
+        public List<Verse> Verses { get; set; }
     }
-    
 
-    public static async Task<Dictionary<int, List<string>>> GetScriptureTextAsync(string _reference)
+    public class Verse
     {
+        public string Text { get; set; }
+        public List<Verse> verses { get; set; }
+    }
+
+    public static async Task<Dictionary<int, List<string>>> GetScriptureTextAsync(ScriptureReference reference)
+    {
+        string book = reference.GetBook();
+        int chapter = reference.GetChapter();
+        int beginningVerse = reference.GetBeginningVerse();
+        int? endingVerse = reference.GetEndingVerse();
+        List<string> verses = new List<string>();  
+        Dictionary<int, List<string>> dict = new Dictionary<int, List<string>>();
+
         try
 
         {
-            Console.WriteLine($"URL: https://bible-api.com/{Uri.EscapeDataString(_reference)}?translation=kjv");
-            string url = $"https://bible-api.com/{Uri.EscapeDataString(_reference)}";
-            string response = await client.GetStringAsync(url);
-            var options = new JsonSerializerOptions
+            string url = $"https://openscriptureapi.org/api/scriptures/v1/lds/en/book/{book}/{chapter}";
+            if (beginningVerse > 0)
             {
-                PropertyNameCaseInsensitive = true
-            };
+                url += $"?verseStart={beginningVerse}";
 
-            var dictionary = new Dictionary<int, List<string>>();
-
-            var scripture = JsonSerializer.Deserialize<BibleApiResponse>(response, options);
-            if (scripture?.verses != null)
-            {
-                foreach (var v in scripture.verses)
+                if (endingVerse != null)
                 {
-                    List<string> words = new List<string>(v.text.Split("", StringSplitOptions.RemoveEmptyEntries));
-                    Console.WriteLine(words);
-                    Console.WriteLine(v.verse); 
-                    dictionary[v.verse] = words; 
+                    url += $"&verseEnd={endingVerse}";
                 }
-            } 
 
-            return dictionary;
+
+                string response = await client.GetStringAsync(url);
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                };
+
+                var root = JsonSerializer.Deserialize<OpenScriptureRoot>(response, options);
+
+
+                if (root?.Chapter?.Verses == null)
+                {
+                    return dict;
+                }
+                
+                for (int verseNumber = beginningVerse; verseNumber <= endingVerse; verseNumber++)
+                {
+                    string text = root.Chapter.Verses[verseNumber - 1].Text;
+                    verses = text.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList(); 
+                    dict[verseNumber]=verses; 
+                }
+
+                return dict;
+            }
+            return dict;  
         }
-        catch (Exception)
+        catch
         {
-            return new Dictionary<int, List<string>>();
+            return dict; 
         }
     }
+
+
 }
+              
+

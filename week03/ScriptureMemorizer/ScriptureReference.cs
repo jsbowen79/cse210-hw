@@ -1,7 +1,9 @@
 
+using System.Reflection.Metadata.Ecma335;
+
 public class ScriptureReference
 {
-    private string _book = ""; 
+    private string _book; 
    
     private int _beginningVerse;
 
@@ -9,7 +11,7 @@ public class ScriptureReference
 
     private int _chapter;
 
-    public  int GetBeginningVerse()
+    public int GetBeginningVerse()
     {
         return _beginningVerse;
     }
@@ -23,11 +25,13 @@ public class ScriptureReference
     {
         return _book;
     }
-    
+
     public int GetChapter()
     {
-        return _chapter; 
+        return _chapter;
     }
+    
+ 
 
 
     public ScriptureReference(string book, int chapter, int beginningVerse, int? endingVerse)
@@ -35,6 +39,7 @@ public class ScriptureReference
     beginning verse, and ending verse.  The endingVerse parameter is optional and can remain null without 
     breaking the program.  This allows for entries of multiple verses without multiple constructors. */
     {
+       
         _book = book;
         _chapter = chapter; 
         _beginningVerse = beginningVerse;
@@ -67,8 +72,9 @@ public class ScriptureReference
             {
                 string bookAndChapter = input.Substring(0, colonIndex).Trim();
                 int spaceIndex = bookAndChapter.LastIndexOf(" ");
-                string book = bookAndChapter.Substring(0, spaceIndex).Trim();
-
+                string preBook = bookAndChapter.Substring(0, spaceIndex).Trim();
+                string book = NormalizeBook(preBook);
+              
                 string versePart = input.Substring(colonIndex + 1).Trim();
 
                 int beginningVerse;
@@ -105,5 +111,26 @@ public class ScriptureReference
         return _endingVerse == null
             ? $"{_book} {_chapter}:{_beginningVerse}"
             : $"{_book} {_chapter}:{_beginningVerse}-{_endingVerse}";
+    }
+   
+    public static string NormalizeBook(string book)
+    {
+        book = book.ToLower(); 
+
+        if (book.Contains(" "))
+        {
+         book = book.Replace(" ", "");
+        }
+
+        if (book.Contains("doctrine") || book.Contains("&"))
+        {
+            book = "doctrineandcovenants";
+        }
+
+        if (book.Contains("solomon"))
+        {
+            book = "song-of-solomon";
+        }
+        return book; 
     }
 }
