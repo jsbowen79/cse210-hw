@@ -7,23 +7,7 @@ using System.Threading.Tasks;
 
 public class ScriptureFetcher
 {
-    private static readonly HttpClient client = new HttpClient();
-
-    public class OpenScriptureRoot
-    {
-        public Chapter Chapter { get; set; }
-    }
-
-    public class Chapter
-    {
-        public List<Verse> Verses { get; set; }
-    }
-
-    public class Verse
-    {
-        public string Text { get; set; }
-        public List<Verse> verses { get; set; }
-    }
+    private static readonly HttpClient _client = new HttpClient();
 
     public static async Task<Dictionary<int, List<string>>> GetScriptureTextAsync(ScriptureReference reference)
     {
@@ -48,7 +32,7 @@ public class ScriptureFetcher
                 }
 
 
-                string response = await client.GetStringAsync(url);
+                string response = await _client.GetStringAsync(url);
                 var options = new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
@@ -61,10 +45,13 @@ public class ScriptureFetcher
                 {
                     return dict;
                 }
+
+                int lastVerse = endingVerse ?? beginningVerse; 
                 
-                for (int verseNumber = beginningVerse; verseNumber <= endingVerse; verseNumber++)
+                for (int verseNumber = beginningVerse; verseNumber <= lastVerse; verseNumber++)
                 {
                     string text = root.Chapter.Verses[verseNumber - 1].Text;
+
                     verses = text.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries).ToList(); 
                     dict[verseNumber]=verses; 
                 }
