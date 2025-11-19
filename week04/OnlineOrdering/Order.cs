@@ -2,10 +2,10 @@ using System.Reflection.Metadata.Ecma335;
 
 public class Order
 {
-    List<Product> _productList = new List<Product>();
-    Customer _purchaser = new Customer();
+    private List<Product> _productList = new List<Product>();
+    private Customer _purchaser = new Customer();
 
-     public Order(List<Product> productList, Customer purchaser)
+    public Order(List<Product> productList, Customer purchaser)
     {
         _purchaser = purchaser;
         _productList = productList;
