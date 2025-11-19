@@ -44,7 +44,7 @@ class Program
 
         foreach (Video item in videoList)
         {
-             item.printVideo();
+             item.PrintVideo();
         }       
     }
 }

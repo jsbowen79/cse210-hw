@@ -25,19 +25,26 @@ public class Video
  
     }
 
-    public void printVideo ()
+    public void CountComments()
     {
+        Console.WriteLine($"There are {_commentList.Count} comments on this video!");
+    }
+
+    public void PrintVideo ()
+    {
+        Console.WriteLine(); 
         Console.WriteLine($"Video Title: {_title}");
         Console.WriteLine($"Video Author: {_author}");
         Console.WriteLine($"Video Length: {_length} seconds");
-        Console.WriteLine($"There are {_commentList.Count} comments on this video!");
+        CountComments(); 
 
-       int i = 1; 
+       int i = 1;
         foreach (Comment item in _commentList)
-            {
+        {
             Console.WriteLine($"Comment #{i} made by {item.GetUserID()}");
-            Console.WriteLine($"Content: {item.GetComment()}"); 
-            i++; 
-            }
+            Console.WriteLine($"Content: {item.GetComment()}");
+            i++;
+        }
+        Console.WriteLine(); 
     }
 }
