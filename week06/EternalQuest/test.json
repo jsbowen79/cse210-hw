@@ -1,0 +1,37 @@
+{
+  "Goals": [
+    {
+      "$type": "simple",
+      "ShortName": "test",
+      "Description": "test",
+      "Points": 3,
+      "Complete": false
+    },
+    {
+      "$type": "simple",
+      "ShortName": "Lose Weight",
+      "Description": "Lose 10 lbs",
+      "Points": 200,
+      "Complete": false
+    },
+    {
+      "$type": "eternal",
+      "CompletedCount": 0,
+      "ShortName": "Read Scriptures",
+      "Description": "Read Daily",
+      "Points": 20,
+      "Complete": false
+    },
+    {
+      "$type": "checklist",
+      "AmountCompleted": 0,
+      "Target": 3,
+      "Bonus": 500,
+      "ShortName": "Temple",
+      "Description": "Attend monthly",
+      "Points": 200,
+      "Complete": false
+    }
+  ],
+  "Score": 0
+}
